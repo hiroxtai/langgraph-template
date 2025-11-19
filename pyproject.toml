@@ -1,0 +1,117 @@
+[project]
+name = "langgraph-template"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "langchain>=1.0.7",
+    "langchain-core>=1.0.5",
+    "langchain-openai>=1.0.3",
+    "langgraph>=1.0.3",
+    "pydantic-settings>=2.12.0",
+    "python-dotenv>=1.2.1",
+]
+
+[dependency-groups]
+dev = [
+    "pyright>=1.1.407",
+    "ruff>=0.14.5",
+]
+
+[tool.ruff]
+# Python 3.13をターゲットに設定
+target-version = "py313"
+
+# 1行の最大文字数（Black互換）
+line-length = 88
+
+# インデントはスペース4つ
+indent-width = 4
+
+# 除外するディレクトリ/ファイルパターン
+extend-exclude = [
+    ".venv",
+    "build",
+    "dist",
+    "__pycache__",
+]
+
+[tool.ruff.lint]
+# 有効化するルールセット
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes
+    "I",      # isort
+    "N",      # pep8-naming
+    "UP",     # pyupgrade
+    "B",      # flake8-bugbear
+    "C4",     # flake8-comprehensions
+    "SIM",    # flake8-simplify
+    "TID",    # flake8-tidy-imports
+    "RUF",    # ruff-specific rules
+]
+
+# 無視するルール
+ignore = [
+    "E501",   # line-too-long (formatterで処理)
+]
+
+# ファイルごとに特定のルールを無視
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]  # 未使用インポートを許可
+
+[tool.ruff.format]
+# クォートスタイル（ダブルクォートを優先）
+quote-style = "double"
+
+# インデントスタイル（スペース）
+indent-style = "space"
+
+# マジックトレーリングカンマ（Black互換）
+skip-magic-trailing-comma = false
+
+# 行末の処理（自動で検出）
+line-ending = "auto"
+
+[tool.ruff.lint.isort]
+# isort設定
+known-first-party = ["langgraph_20251117_sample"]
+force-single-line = false
+lines-after-imports = 2
+
+[tool.pyright]
+# Python バージョン
+pythonVersion = "3.13"
+
+# 型チェックの厳密さ（basic, standard, strict）
+typeCheckingMode = "standard"
+
+# インクルード/除外設定
+include = ["."]
+exclude = [
+    ".venv",
+    "**/__pycache__",
+    "build",
+    "dist",
+]
+
+# 型スタブの検索パス
+stubPath = "typings"
+
+# レポート設定
+reportMissingTypeStubs = "warning"
+reportUnknownParameterType = "warning"
+reportUnknownArgumentType = "warning"
+reportUnknownLambdaType = "warning"
+reportUnknownVariableType = "warning"
+reportUnknownMemberType = "warning"
+reportMissingParameterType = "warning"
+reportUnnecessaryIsInstance = "warning"
+reportUnnecessaryCast = "warning"
+reportUnnecessaryComparison = "warning"
+reportConstantRedefinition = "error"
+reportDuplicateImport = "error"
+reportIncompatibleMethodOverride = "error"
+reportIncompatibleVariableOverride = "error"
