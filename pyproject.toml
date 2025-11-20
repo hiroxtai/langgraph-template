@@ -56,6 +56,8 @@ select = [
 # 無視するルール
 ignore = [
     "E501",   # line-too-long (formatterで処理)
+    "RUF002", # 日本語docstringの全角括弧を許可
+    "RUF003", # 日本語コメントの全角記号を許可
 ]
 
 # ファイルごとに特定のルールを無視

@@ -1,5 +1,8 @@
 # langgraph-template
 
+[![CI](https://github.com/hiroxtai/langgraph-template/actions/workflows/ci.yml/badge.svg)](https://github.com/hiroxtai/langgraph-template/actions/workflows/ci.yml)
+[![PR Checks](https://github.com/hiroxtai/langgraph-template/actions/workflows/pr-checks.yml/badge.svg)](https://github.com/hiroxtai/langgraph-template/actions/workflows/pr-checks.yml)
+
 LangGraphの動作確認用サンプルプロジェクト
 
 ## 概要
@@ -64,6 +67,10 @@ langgraph-template/
 ├── .devcontainer/
 │   └── devcontainer.json        # Dev Container設定
 ├── .github/
+│   ├── workflows/
+│   │   ├── ci.yml              # CI/CDパイプライン
+│   │   ├── pr-checks.yml       # PRコード品質チェック
+│   │   └── dependency-review.yml # 依存関係脆弱性チェック
 │   └── copilot-instructions.md  # GitHub Copilot設定
 └── .vscode/
     ├── settings.json            # エディタ設定
@@ -190,7 +197,57 @@ uv run pyright
 - 通常エッジ: 常に次のノードに遷移
 - 条件付きエッジ: Stateに基づいて動的に次のノードを決定
 
+## CI/CD
+
+### GitHub Actions
+
+このプロジェクトでは3つのワークフローが自動実行されます:
+
+#### 1. CI (`ci.yml`)
+- **トリガー**: mainブランチへのpush、PRの作成・更新
+- **実行内容**:
+  - コードフォーマットチェック（Ruff）
+  - リント（Ruff）
+  - 型チェック（Pyright）
+  - アプリケーション実行テスト（OPENAI_API_KEY設定時）
+
+#### 2. PR Checks (`pr-checks.yml`)
+- **トリガー**: PRの作成・更新
+- **実行内容**:
+  - コード品質チェック（フォーマット、リント、型チェック）
+  - PRへの結果コメント自動投稿
+
+#### 3. Dependency Review (`dependency-review.yml`)
+- **トリガー**: mainブランチへのPR
+- **実行内容**:
+  - 依存関係の脆弱性チェック
+  - 中程度以上の脆弱性で失敗
+  - 問題発見時はPRにコメント
+
+### Secrets設定
+
+GitHub Actionsでアプリケーションテストを実行する場合:
+
+1. GitHubリポジトリの Settings → Secrets and variables → Actions
+2. `New repository secret` をクリック
+3. Name: `OPENAI_API_KEY`、Secret: APIキーを入力
+
+### ローカルでのCI実行
+
+GitHub Actionsと同じチェックをローカルで実行:
+
+```bash
+# 全チェックを一括実行
+uv run ruff format --check . && \
+uv run ruff check . && \
+uv run pyright && \
+uv run python main.py
+```
+
 ## 参考リンク
 
 - [LangGraph Documentation](https://langchain-ai.github.io/langgraph/)
 - [LangGraph GitHub](https://github.com/langchain-ai/langgraph)
+- [uv Documentation](https://docs.astral.sh/uv/)
+- [Ruff Documentation](https://docs.astral.sh/ruff/)
+
