@@ -7,8 +7,20 @@
 		"ghcr.io/devcontainers-extra/features/uv:1": {}
 	},
 
-	// コンテナ作成後の初期化コマンド
-	"postCreateCommand": "uv sync",
+	// ボリュームマウント設定(.venvを高速ストレージに配置)
+	"mounts": [
+		{
+			"source": "${localWorkspaceFolderBasename}-venv",
+			"target": "${containerWorkspaceFolder}/.venv",
+			"type": "volume"
+		}
+	],
+
+	// コンテナ作成時にボリュームの権限を修正してから依存関係をインストール
+	"postCreateCommand": "sudo chown -R vscode:vscode ${containerWorkspaceFolder}/.venv && uv sync",
+
+	// ユーザー設定（ボリュームマウントの権限問題を解決）
+	"remoteUser": "vscode",
 
 	// VSCode拡張機能とエディタ設定
 	"customizations": {
@@ -30,6 +42,7 @@
 				},
 				"ruff.nativeServer": "auto",
 				"ruff.importStrategy": "fromEnvironment",
+				"python.analysis.typeCheckingMode": "standard",
 				"python.analysis.diagnosticMode": "workspace",
 				"python.analysis.autoImportCompletions": true,
 				"python.analysis.inlayHints.functionReturnTypes": true,
