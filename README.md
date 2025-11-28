@@ -53,7 +53,7 @@ uv run main.py
 
 ```
 langgraph-template/
-├── src/                          # アプリケーションコード
+├── app/                          # アプリケーションコード
 │   ├── __init__.py              # パッケージ初期化
 │   ├── config.py                # 設定管理 (Pydantic Settings)
 │   ├── models.py                # チャットモデルファクトリ
@@ -83,21 +83,21 @@ langgraph-template/
 ### Phase 1 (完了) ✅
 
 #### コア機能
-- **設定管理** (`src/config.py`)
+- **設定管理** (`app/config.py`)
   - Pydantic Settingsによる型安全な環境変数管理
   - SecretStr型でAPIキーをセキュアに取り扱い
   - .envファイルからの自動読み込み
 
-- **チャットモデル** (`src/models.py`)
+- **チャットモデル** (`app/models.py`)
   - `init_chat_model()`でプロバイダー非依存のモデル作成
   - LRUキャッシュによるインスタンス再利用
   - OpenAI GPT-4o-mini統合
 
-- **State定義** (`src/state.py`)
+- **State定義** (`app/state.py`)
   - LangGraph用のAgentState TypedDict
   - add_messagesリデューサーでメッセージ履歴管理
 
-- **グラフ実装** (`src/graph.py`)
+- **グラフ実装** (`app/graph.py`)
   - シンプルな単一ノード構成 (START → agent → END)
   - チャットモデルによるメッセージ処理
 
@@ -110,13 +110,13 @@ langgraph-template/
 - **推奨拡張機能**: Python、Pylance、Ruff、debugpy、Even Better TOML
 
 ### Phase 2 (未実装)
-- ノード関数の分離 (`src/nodes/`)
-- 条件分岐ロジックの分離 (`src/edges/`)
+- ノード関数の分離 (`app/nodes/`)
+- 条件分岐ロジックの分離 (`app/edges/`)
 - 複数ノードによる処理チェーン
 - エラーハンドリングの強化
 
 ### Phase 3 (未実装)
-- ツール統合 (`src/tools/`)
+- ツール統合 (`app/tools/`)
   - 検索、計算、API呼び出しなど
 - 外部APIとの連携
 - RAG (Retrieval-Augmented Generation) 実装

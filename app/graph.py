@@ -3,8 +3,8 @@
 from langchain_core.messages import BaseMessage
 from langgraph.graph import END, START, StateGraph
 
-from src.models import create_chat_model
-from src.state import AgentState
+from app.models import create_chat_model
+from app.state import AgentState
 
 
 def agent_node(state: AgentState) -> dict[str, list[BaseMessage]]:

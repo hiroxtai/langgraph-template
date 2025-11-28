@@ -2,8 +2,8 @@ def main() -> None:
     """LangGraphサンプルアプリケーションのエントリーポイント."""
     from langchain_core.messages import HumanMessage
 
-    from src.graph import graph
-    from src.state import AgentState
+    from app.graph import graph
+    from app.state import AgentState
 
     # サンプル入力
     initial_state: AgentState = {
@@ -33,8 +33,8 @@ def demo_streaming() -> None:
     """ストリーミング実行のデモ."""
     from langchain_core.messages import HumanMessage
 
-    from src.graph import graph
-    from src.state import AgentState
+    from app.graph import graph
+    from app.state import AgentState
 
     print("\n=== Streaming Demo ===")
     initial_state: AgentState = {
